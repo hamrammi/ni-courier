@@ -16,7 +16,7 @@ export async function GET (req: NextRequest) {
   if (action === 'refresh') {
     const { refreshToken } = await getSession()
     if (refreshToken) {
-      const data = await httpApi.refreshTokens(refreshToken)
+      const data = await httpApi.authRefresh(refreshToken)
       await createSession(data.accessToken, data.refreshToken)
       redirect(redirectUrl)
     } else {

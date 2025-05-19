@@ -1,4 +1,4 @@
-import { JWTPayload, jwtVerify, SignJWT } from 'jose'
+import { JWTPayload, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { cache } from 'react'
 import 'server-only'
@@ -65,19 +65,4 @@ async function verifyToken (token: string) {
     algorithms: ['HS256']
   })
   return payload as JWTPayload
-}
-
-export async function createFakeTokens () {
-  return {
-    accessToken: await new SignJWT({ courier_id: '101' })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setIssuedAt()
-      .setExpirationTime('1m')
-      .sign(new TextEncoder().encode(process.env.JWT_SECRET)),
-    refreshToken: await new SignJWT({ courier_id: '101' })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setIssuedAt()
-      .setExpirationTime('10m')
-      .sign(new TextEncoder().encode(process.env.JWT_SECRET))
-  }
 }

@@ -1,7 +1,8 @@
 'use server'
 
-import { createFakeTokens, createSession } from '@/lib/session'
+import { createSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
+import api from '@/lib/http'
 
 export async function loginAction (prevState: { error: string }, formData: FormData) {
   const fd = {
@@ -21,8 +22,8 @@ export async function loginAction (prevState: { error: string }, formData: FormD
     }
   }
 
-  const { accessToken, refreshToken } = await createFakeTokens()
-  await createSession(accessToken, refreshToken)
+  const data = await api.authLogin(fd.login, fd.password)
+  await createSession(data.accessToken, data.refreshToken)
 
   redirect('/')
 }

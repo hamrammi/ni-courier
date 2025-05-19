@@ -1,0 +1,99 @@
+import express from 'express'
+import fs from 'node:fs'
+import { SignJWT } from 'jose'
+
+const app = express()
+const port = 3003
+
+async function createFakeTokens () {
+  return {
+    accessToken: await new SignJWT({ courier_id: '101' })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('1m')
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET)),
+    refreshToken: await new SignJWT({ courier_id: '101' })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('10m')
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET))
+  }
+}
+
+app.post('/auth/login', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: await createFakeTokens()
+  })
+})
+
+app.post('/auth/refresh', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: await createFakeTokens()
+  })
+})
+
+
+app.get('/orders', (req, res) => {
+  const { type } = req.query
+  const rawContent = fs.readFileSync('fake-data.json', 'utf-8')
+  const fakeData = JSON.parse(rawContent)
+  const items = fakeData.orders.items.filter((order) => order.status === type)
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: {
+      items
+    }
+  })
+})
+
+app.post('/orders/:orderId/get', (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  const rawContent = fs.readFileSync('fake-data.json', 'utf-8')
+  const fakeData = JSON.parse(rawContent)
+  const idx = fakeData.orders.items.findIndex((order) => order.id === Number(req.params.orderId))
+  if (fakeData.orders.items[idx].status === 'assembled') {
+    fakeData.orders.items[idx].status = 'delivering'
+  }
+  if (fakeData.orders.items[idx].status === 'expired') {
+    fakeData.orders.items[idx].status = 'returning'
+  }
+  const json = JSON.stringify(fakeData, null, 2)
+  fs.writeFileSync('fake-data.json', json, 'utf-8')
+  res.send({
+    status: 'success',
+    data: null
+  })
+})
+
+app.post('/orders/:orderId/put', (req, res) => {
+  const { destination } = req.query
+  const rawContent = fs.readFileSync('fake-data.json', 'utf-8')
+  const fakeData = JSON.parse(rawContent)
+  const idx = fakeData.orders.items.findIndex((order) => order.id === Number(req.params.orderId))
+  if (fakeData.orders.items[idx].status === 'delivering') {
+    if (destination === 'store') {
+      fakeData.orders.items[idx].status = 'assembled'
+    } else {
+      fakeData.orders.items[idx].status = 'expired'
+    }
+  }
+  if (fakeData.orders.items[idx].status === 'returning') {
+    fakeData.orders.items.splice(idx, 1)
+  }
+  const json = JSON.stringify(fakeData, null, 2)
+  fs.writeFileSync('fake-data.json', json, 'utf-8')
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: null
+  })
+})
+
+app.listen(port, () => {
+  console.log(`Fake server listening on port ${port}`)
+})
