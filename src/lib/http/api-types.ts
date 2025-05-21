@@ -34,3 +34,15 @@ export interface OrdersResponse {
     }>
   }>
 }
+
+export interface StoresResponse {
+  items: Array<{
+    id: number
+    title: string
+    photo: string | null
+    deliveryPoints: Array<{
+      id: number
+      address: string
+    }>
+  }>
+}

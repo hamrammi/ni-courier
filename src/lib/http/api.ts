@@ -1,4 +1,4 @@
-import { AuthLoginResponse, AuthRefreshResponse, OrdersResponse } from './api-types'
+import { AuthLoginResponse, AuthRefreshResponse, OrdersResponse, StoresResponse } from './api-types'
 
 class ApiError extends Error {
   code: number = 0
@@ -45,6 +45,14 @@ export default class Api {
 
   putOrder (orderId: number, destination: 'store' | 'delivery-point') {
     return this.fetchPost<null>(`/orders/${orderId}/put?destination=${destination}`, {})
+  }
+
+  getStores () {
+    return this.fetchGet<StoresResponse>('/stores')
+  }
+
+  returnOrders (storeId: number, deliveryPointId: number) {
+    return this.fetchPost<null>(`/orders/return?storeId=${storeId}&deliveryPointId=${deliveryPointId}`, {})
   }
 
   private async fetchGet<RT> (url: string) {

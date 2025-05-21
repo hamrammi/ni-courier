@@ -5,17 +5,19 @@ import { SignJWT } from 'jose'
 const app = express()
 const port = 3003
 
+app.use('/public', express.static('public'))
+
 async function createFakeTokens () {
   return {
     accessToken: await new SignJWT({ courier_id: '101' })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setExpirationTime('1m')
+      .setExpirationTime('60m')
       .sign(new TextEncoder().encode(process.env.JWT_SECRET)),
     refreshToken: await new SignJWT({ courier_id: '101' })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setExpirationTime('10m')
+      .setExpirationTime('1440m')
       .sign(new TextEncoder().encode(process.env.JWT_SECRET))
   }
 }
@@ -91,6 +93,43 @@ app.post('/orders/:orderId/put', (req, res) => {
   res.send({
     status: 'success',
     data: null
+  })
+})
+
+app.get('/stores', (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: {
+      items: [
+        {
+          id: 1,
+          title: 'Магазин 1',
+          photo: null,
+          deliveryPoints: [
+            {
+              id: 1,
+              address: 'test address'
+            },
+            {
+              id: 2,
+              address: 'test address 2'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: 'Магазин 2',
+          photo: 'http://127.0.0.1:3003/public/bakery.jpg',
+          deliveryPoints: [
+            {
+              id: 3,
+              address: 'test address'
+            },
+          ]
+        }
+      ]
+    }
   })
 })
 

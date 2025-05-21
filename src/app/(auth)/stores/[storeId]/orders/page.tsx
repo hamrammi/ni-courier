@@ -1,28 +1,24 @@
 import { getUserOrRedirect } from '@/lib/auth'
-import { Package, Refrigerator, Store, Undo2 } from 'lucide-react'
+import { Package, Refrigerator, Store } from 'lucide-react'
 import Link from 'next/link'
 
-export default async function OrderSelectionPage () {
-  await getUserOrRedirect('/orders')
+export default async function OrderSelectionPage ({ params }: { params: { storeId: string } }) {
+  const { storeId } = await params
+  await getUserOrRedirect(`/stores/${storeId}/orders`)
 
   const orders = [
     {
-      href: '/orders/assembled',
+      href: `/stores/${storeId}/orders/assembled`,
       title: 'Забрать из магазина',
       icon: <Package />
     },
     {
-      href: '/orders/delivering',
+      href: `/stores/${storeId}/orders/delivering`,
       title: 'Положить в пункт выдачи',
       icon: <Refrigerator />
     },
     {
-      href: '/orders/expired',
-      title: 'Забрать из пункта выдачи на возврат',
-      icon: <Undo2 />
-    },
-    {
-      href: '/orders/returning',
+      href: `/stores/${storeId}/orders/returning`,
       title: 'Вернуть в магазин',
       icon: <Store />
     }
@@ -30,7 +26,7 @@ export default async function OrderSelectionPage () {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="font-black text-3xl mt-10">Списки заказов</div>
+      <div className="font-black text-3xl mt-10 text-center">Списки заказов</div>
       {orders.map((order) => (
         <Link
           key={order.href}
@@ -41,6 +37,15 @@ export default async function OrderSelectionPage () {
           {order.title}
         </Link>
       ))}
+
+      <div className="mt-10">
+        <Link
+          className="py-4 bg-black text-white rounded-xl flex justify-center"
+          href={`/stores/${storeId}/orders/expired`}
+        >
+          Забрать возврат
+        </Link>
+      </div>
     </div>
   )
 }

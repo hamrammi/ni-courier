@@ -4,14 +4,15 @@ import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import Button from './button'
 
-export default async function OrdersAssembledPage () {
-  await getUserOrRedirect('/orders/assembled')
+export default async function OrdersAssembledPage ({ params }: { params: { storeId: string } }) {
+  const { storeId } = await params
+  console.log('storeId', storeId)
+  await getUserOrRedirect(`/stores/${storeId}/orders/assembled`)
   const orders = await httpApi.getOrders({ type: 'assembled' })
-  console.log(orders)
 
   return (
     <div className="flex flex-col gap-6">
-      <Link href="/orders" className="flex gap-2 items-center text-violet-500">
+      <Link href={`/stores/${storeId}/orders`} className="flex gap-2 items-center text-violet-500">
         <ChevronLeft />
         <span className="underline underline-offset-4">На главную</span>
       </Link>

@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   /* config options here */
-};
+  images: {
+    remotePatterns: [
+      new URL("http://127.0.0.1:3003/public/**"),
+    ]
+  }
+}
 
-export default nextConfig;
+export default nextConfig

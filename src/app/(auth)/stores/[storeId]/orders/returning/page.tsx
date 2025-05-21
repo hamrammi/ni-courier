@@ -4,17 +4,18 @@ import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import Button from './button'
 
-export default async function OrdersDeliveringPage () {
-  await getUserOrRedirect('/orders/delivering')
-  const orders = await httpApi.getOrders({ type: 'delivering' })
+export default async function OrdersReturningPage ({ params }: { params: { storeId: string } }) {
+  const { storeId } = await params
+  await getUserOrRedirect(`/stores/${storeId}/orders/returning`)
+  const orders = await httpApi.getOrders({ type: 'returning' })
 
   return (
     <div className="flex flex-col gap-6">
-      <Link href="/orders" className="flex gap-2 items-center text-violet-500">
+      <Link href={`/stores/${storeId}/orders`} className="flex gap-2 items-center text-violet-500">
         <ChevronLeft />
         <span className="underline underline-offset-4">На главную</span>
       </Link>
-      <div className="font-black text-center text-3xl">Положить в пункт выдачи</div>
+      <div className="font-black text-center text-3xl">Вернуть в магазин</div>
       <div className="grid grid-cols-1 gap-6">
         {orders.items.map((order) => (
           <div key={order.id} className="bg-white shadow-md rounded-lg rounded-t-xl">

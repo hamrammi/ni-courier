@@ -25,5 +25,10 @@ export async function loginAction (prevState: { error: string }, formData: FormD
   const data = await api.authLogin(fd.login, fd.password)
   await createSession(data.accessToken, data.refreshToken)
 
-  redirect('/')
+  const stores = await api.getStores()
+  if (stores.items.length > 1) {
+    redirect(`/stores`)
+  } else {
+    redirect(`/stores/${stores.items[0].id}/orders`)
+  }
 }

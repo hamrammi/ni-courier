@@ -1,3 +1,5 @@
+import NavBar from '@/components/navbar'
+
 export default function OrdersLayout ({
   children,
 }: Readonly<{
@@ -5,7 +7,7 @@ export default function OrdersLayout ({
 }>) {
   return (
     <div className="flex flex-col w-full lg:w-96 bg-slate-100 min-h-screen">
-      <div className="bg-black text-white w-full h-16 flex justify-center items-center">Курьер</div>
+      <NavBar />
       <div className="p-4">{children}</div>
     </div>
   )
