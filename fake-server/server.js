@@ -133,6 +133,14 @@ app.get('/stores', (req, res) => {
   })
 })
 
+app.post('/orders/return', (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.send({
+    status: 'success',
+    data: null
+  })
+})
+
 app.listen(port, () => {
   console.log(`Fake server listening on port ${port}`)
 })

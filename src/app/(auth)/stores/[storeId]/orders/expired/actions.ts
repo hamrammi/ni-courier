@@ -6,5 +6,5 @@ export async function openCellsWithExpiredOrders (storeId: string, formData: For
   console.log('storeId', storeId)
   const deliveryPointId = formData.get('dpId')
   console.log('deliveryPointId', deliveryPointId)
-  // await api.returnOrders(storeId, deliveryPointId)
+  await api.returnOrders(Number(storeId), Number(deliveryPointId))
 }
