@@ -3,7 +3,7 @@ import httpApi from '@/lib/http'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 
-export default async function OrdersReturningPage ({ params }: { params: { storeId: string } }) {
+export default async function OrdersReturningPage ({ params }: { params: Promise<{ storeId: string }> }) {
   const { storeId } = await params
   const orders = await httpApi.getOrders({ type: 'returning' })
   const stores = await httpApi.getStores()

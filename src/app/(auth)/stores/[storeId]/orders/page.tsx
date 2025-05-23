@@ -1,7 +1,7 @@
 import { Package, Refrigerator, Store } from 'lucide-react'
 import Link from 'next/link'
 
-export default async function OrderSelectionPage ({ params }: { params: { storeId: string } }) {
+export default async function OrderSelectionPage ({ params }: { params: Promise<{ storeId: string }> }) {
   const { storeId } = await params
 
   const orders = [

@@ -10,7 +10,7 @@ class ApiError extends Error {
     this.validationErrors = validationErrors
   }
 }
-class ApiValidationError extends ApiError { }
+export class ApiValidationError extends ApiError { }
 class ApiDomainError extends ApiError { }
 class ApiUnhandledError extends ApiError { }
 class ApiUnauthorizedError extends ApiError { }

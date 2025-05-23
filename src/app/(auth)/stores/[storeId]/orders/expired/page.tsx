@@ -3,7 +3,7 @@ import { ChevronLeft, OctagonAlert } from 'lucide-react'
 import Link from 'next/link'
 import DeliveryPoint from './delivery-point'
 
-export default async function OrdersExpiredPage ({ params }: { params: { storeId: string } }) {
+export default async function OrdersExpiredPage ({ params }: { params: Promise<{ storeId: string }> }) {
   const { storeId } = await params
   const stores = await api.getStores()
   const store = stores.items.find((store) => store.id === Number(storeId))
