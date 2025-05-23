@@ -1,4 +1,5 @@
-import { AuthLoginResponse, AuthRefreshResponse, OrdersResponse, StoresResponse } from './api-types'
+import { getSession } from '../session'
+import { AuthLoginResponse, AuthRefreshResponse, OrdersResponse, ProfileResponse, ReturnOrdersIntoStoreResponse, StoresResponse } from './api-types'
 
 class ApiError extends Error {
   code: number = 0
@@ -26,7 +27,7 @@ export default class Api {
 
   authRefresh (refreshToken: string) {
     return this.fetchPost<AuthRefreshResponse>(
-      '/auth/refresh',
+      '/auth/refresh-token',
       { refreshToken }
     )
   }
@@ -52,24 +53,32 @@ export default class Api {
   }
 
   returnOrders (storeId: number, deliveryPointId: number) {
-    return this.fetchPost<null>(`/orders/return?storeId=${storeId}&deliveryPointId=${deliveryPointId}`, {})
+    return this.fetchPost<ReturnOrdersIntoStoreResponse>(`/orders/return?storeId=${storeId}&deliveryPointId=${deliveryPointId}`, {})
+  }
+
+  getProfile () {
+    return this.fetchGet<ProfileResponse>('/profile')
   }
 
   private async fetchGet<RT> (url: string) {
+    const { accessToken } = await getSession()
     const res = await fetch(process.env.API_URL + url, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
       }
     })
     return this.getDataOrThrow<RT>(res)
   }
 
   private async fetchPost<RT> (url: string, body: Record<string, unknown>) {
+    const { accessToken } = await getSession()
     const res = await fetch(process.env.API_URL + url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
       },
       body: JSON.stringify(body)
     })
@@ -78,6 +87,7 @@ export default class Api {
 
   private async getDataOrThrow<RT> (res: Response) {
     const json = await res.json()
+    // console.log('JSON >>>>', JSON.stringify(json))
     if (res.ok) {
       if (json.status === 'success') {
         return json.data as RT

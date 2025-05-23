@@ -6,6 +6,7 @@ import { InvalidAccessAndRefreshTokensError, MissingAccessTokenError, MissingRef
 export const getUserOrRedirect = cache(async (redirectUrl: string) => {
   try {
     const session = await verifySession()
+    console.log(session)
     return {
       access: session.accessToken,
       user: {

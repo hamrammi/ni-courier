@@ -7,8 +7,8 @@ export interface SessionPayload extends JWTPayload {
   courier_id: string
 }
 
-const accessTokenName = 'newit.delivery-courier.access_token'
-const refreshTokenName = 'newit.delivery-courier.refresh_token'
+export const accessTokenName = 'newit.delivery-courier.access_token'
+export const refreshTokenName = 'newit.delivery-courier.refresh_token'
 
 export async function getSession () {
   const cookieStore = await cookies()
@@ -60,7 +60,7 @@ export const verifySession = cache(async () => {
   }
 })
 
-async function verifyToken (token: string) {
+export async function verifyToken (token: string) {
   const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET), {
     algorithms: ['HS256']
   })

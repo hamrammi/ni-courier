@@ -9,30 +9,7 @@ export interface AuthRefreshResponse {
 }
 
 export interface OrdersResponse {
-  items: Array<{
-    id: number
-    number: string
-    date: number
-    pickUpTime: string
-    storeId: number
-    status: string
-    sum: string
-    deliveryPoint: {
-      id: number
-      address: string
-      state: string
-    },
-    pinCode: string
-    cells: string[],
-    items: Array<{
-      productId: number
-      title: string
-      price: string
-      quantity: number
-      photo: string
-      description: string
-    }>
-  }>
+  items: Array<OrderItem>
 }
 
 export interface StoresResponse {
@@ -40,9 +17,42 @@ export interface StoresResponse {
     id: number
     title: string
     photo: string | null
-    deliveryPoints: Array<{
-      id: number
-      address: string
-    }>
+    deliveryPoints: DeliveryPointItem[]
   }>
+}
+
+export interface ReturnOrdersIntoStoreResponse {
+  cells: number[]
+}
+
+export interface OrderItem {
+  id: number
+  number: string
+  date: number
+  pickUpTime: string
+  storeId: number
+  status: string
+  sum: string
+  deliveryPointId: number
+  pinCode: string
+  cells: string[],
+  items: Array<{
+    productId: number
+    title: string
+    price: string
+    quantity: number
+    photo: string
+    description: string
+  }>
+}
+
+export interface DeliveryPointItem {
+  id: number
+  address: string
+}
+
+export interface ProfileResponse {
+  name: string
+  phone: string
+  email: string
 }

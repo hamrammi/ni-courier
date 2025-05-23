@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       new URL("http://127.0.0.1:3003/public/**"),
+      new URL("http://localhost:8080/assets/**"),
     ]
   }
 }

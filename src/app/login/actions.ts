@@ -6,20 +6,8 @@ import api from '@/lib/http'
 
 export async function loginAction (prevState: { error: string }, formData: FormData) {
   const fd = {
-    login: formData.get('login'),
-    password: formData.get('password')
-  }
-
-  if (fd.login !== 'dev') {
-    return {
-      error: 'Login not found'
-    }
-  }
-
-  if (fd.password !== 'test') {
-    return {
-      error: 'Incorrect password'
-    }
+    login: formData.get('login') as string,
+    password: formData.get('password') as string
   }
 
   const data = await api.authLogin(fd.login, fd.password)

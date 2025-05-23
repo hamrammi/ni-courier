@@ -1,7 +1,7 @@
 import api from '@/lib/http'
-import Link from 'next/link'
-import Image from 'next/image'
 import { Store } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default async function StoresPage () {
   const stores = await api.getStores()

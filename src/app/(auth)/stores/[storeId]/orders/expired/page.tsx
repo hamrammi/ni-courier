@@ -1,14 +1,12 @@
 import api from '@/lib/http'
 import { ChevronLeft, OctagonAlert } from 'lucide-react'
-import { openCellsWithExpiredOrders } from './actions'
 import Link from 'next/link'
+import DeliveryPoint from './delivery-point'
 
 export default async function OrdersExpiredPage ({ params }: { params: { storeId: string } }) {
-  const stores = await api.getStores()
   const { storeId } = await params
+  const stores = await api.getStores()
   const store = stores.items.find((store) => store.id === Number(storeId))
-
-  const openCellsWithExpiredOrdersBound = openCellsWithExpiredOrders.bind(null, storeId)
 
   return (
     <div className="flex flex-col gap-6">
@@ -24,23 +22,18 @@ export default async function OrdersExpiredPage ({ params }: { params: { storeId
           кнопку <strong>будут открыты все ячейки</strong> в которых хранятся просроченные заказы.
         </div>
       </div>
-      <div className="flex flex-col gap-6">
-        {store?.deliveryPoints.map((dp) => (
-          <form
-            action={openCellsWithExpiredOrdersBound}
-            key={dp.id}
-            className="flex"
-          >
-            <input type="hidden" name="dpId" value={dp.id} className="hidden" />
-            <button
-              className="p-4 border border-black rounded-xl shadow w-full"
-              type="submit"
-            >
-              Забрать заказы из {dp.address}
-            </button>
-          </form>
-        ))}
-      </div>
+      {store && (
+        <div className="flex flex-col gap-6">
+          {store?.deliveryPoints.map((dp) => (
+            <DeliveryPoint
+              key={`delivery-point-${dp.id}`}
+              deliveryPoint={dp}
+              storeId={Number(storeId)}
+            />
+          ))}
+        </div>
+
+      )}
     </div>
   )
 }

@@ -1,10 +1,8 @@
-import { getUserOrRedirect } from '@/lib/auth'
 import { Package, Refrigerator, Store } from 'lucide-react'
 import Link from 'next/link'
 
 export default async function OrderSelectionPage ({ params }: { params: { storeId: string } }) {
   const { storeId } = await params
-  await getUserOrRedirect(`/stores/${storeId}/orders`)
 
   const orders = [
     {
@@ -31,7 +29,7 @@ export default async function OrderSelectionPage ({ params }: { params: { storeI
         <Link
           key={order.href}
           href={order.href}
-          className="bg-white hover:bg-violet-500 hover:text-white py-6 font-semibold rounded-xl w-full px-4 shadow flex gap-4"
+          className="bg-white hover:bg-violet-500 hover:text-white py-4 font-semibold rounded-xl w-full px-4 shadow flex gap-4 border border-black"
         >
           {order.icon}
           {order.title}
@@ -40,7 +38,7 @@ export default async function OrderSelectionPage ({ params }: { params: { storeI
 
       <div className="mt-10">
         <Link
-          className="py-4 bg-black text-white rounded-xl flex justify-center"
+          className="py-4 bg-black text-white rounded-xl flex justify-center shadow"
           href={`/stores/${storeId}/orders/expired`}
         >
           Забрать возврат

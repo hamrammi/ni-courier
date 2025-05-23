@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
 
 export default function EntryPage () {
-  redirect('/orders')
+  redirect('/stores')
 }
