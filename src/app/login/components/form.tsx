@@ -1,7 +1,8 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { loginAction } from '../actions'
+import { Eye, EyeOff } from 'lucide-react'
 
 interface InitialState {
   error: string
@@ -15,7 +16,7 @@ const initialState: InitialState = {
 
 export default function LoginForm () {
   const [state, formAction, isPending] = useActionState(loginAction, initialState)
-
+  const [showPassword, setShowPassword] = useState(false)
   return (
     <form
       className="space-y-4 p-4 w-full max-w-sm"
@@ -37,17 +38,24 @@ export default function LoginForm () {
           required={true}
         />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 relative">
         <label className="block" htmlFor="password">
           Пароль
         </label>
         <input
           className="block w-full px-4 py-2 border rounded-md"
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           name="password"
           required={true}
         />
+        <div
+          className="absolute h-11 w-11 right-0 bottom-0 flex items-center justify-center cursor-pointer"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {!showPassword && <EyeOff />}
+          {showPassword && <Eye />}
+        </div>
       </div>
       <button
         className="block w-full px-4 py-2 bg-violet-500 text-white rounded-md hover:bg-violet-700 font-semibold"

@@ -22,7 +22,7 @@ export async function createSession (accessToken: string, refreshToken: string) 
   const cookieStore = await cookies()
   const opts = {
     httpOnly: true,
-    secure: true,
+    // secure: true, // doesn't work on production 192.168.11.225
     sameSite: 'lax' as const,
     path: '/',
   }
