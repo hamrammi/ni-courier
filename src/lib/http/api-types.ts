@@ -17,7 +17,10 @@ export interface StoresResponse {
     id: number
     title: string
     photo: string | null
+    description: string
     deliveryPoints: DeliveryPointItem[]
+    orderAvailableFrom: string
+    orderAvailableTo: string
   }>
 }
 

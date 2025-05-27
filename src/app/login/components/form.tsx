@@ -22,16 +22,16 @@ export default function LoginForm () {
       className="space-y-4 p-4 w-full max-w-sm"
       action={formAction}
     >
-      <h2 className="text-2xl font-bold">Вход</h2>
+      <h2 className="text-3xl font-black text-center">Вход курьера</h2>
       {state.error && <p className="text-red-500">{state.error}</p>}
       {state.validationErrors.login && <p className="text-red-500">{state.validationErrors.login}</p>}
       {state.validationErrors.password && <p className="text-red-500">{state.validationErrors.password}</p>}
       <div className="space-y-2">
         <label className="block" htmlFor="login">
-          Логин
+          Телефон
         </label>
         <input
-          className="block w-full px-4 py-2 border rounded-md"
+          className="block w-full px-4 py-2 border rounded-md bg-white"
           type="text"
           id="login"
           name="login"
@@ -43,7 +43,7 @@ export default function LoginForm () {
           Пароль
         </label>
         <input
-          className="block w-full px-4 py-2 border rounded-md"
+          className="block w-full px-4 py-2 border rounded-md bg-white"
           type={showPassword ? "text" : "password"}
           id="password"
           name="password"

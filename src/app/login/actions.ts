@@ -11,6 +11,8 @@ export async function loginAction (prevState: { error: string }, formData: FormD
     password: formData.get('password') as string
   }
 
+  fd.login = fd.login.replace(/^(\+?7|8)/, '7')
+
   try {
     const data = await api.authLogin(fd.login, fd.password)
     await createSession(data.accessToken, data.refreshToken)
