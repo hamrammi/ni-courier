@@ -8,7 +8,7 @@ export default async function NavBar ({ storeId }: { storeId?: number }) {
   const store = stores.items.find((store) => store.id === storeId)
 
   return (
-    <div className="bg-white w-full h-16 flex items-center p-4 shadow">
+    <div className="w-full h-16 flex items-center p-4 shadow backdrop-blur-lg bg-white/70">
       <Link href="/stores" className="flex items-center">
         <Store />
         {!storeId && (

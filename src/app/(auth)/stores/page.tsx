@@ -10,7 +10,7 @@ export default async function StoresPage () {
     <>
       <NavBar />
       <div className="p-4">
-        <div className="text-3xl font-black my-10">Магазины</div>
+        <div className="text-3xl font-black my-10 text-center">Магазины</div>
         <div className="flex flex-col gap-6">
           {stores.items.map((store) => (
             <div

@@ -29,7 +29,7 @@ export default async function OrderSelectionPage ({ params }: { params: Promise<
         <Link
           key={order.href}
           href={order.href}
-          className="bg-white hover:bg-violet-500 hover:text-white py-4 font-semibold rounded-xl w-full px-4 shadow flex gap-4 border border-black"
+          className="bg-white hover:bg-violet-500 hover:text-white py-4 font-semibold rounded-xl w-full px-4 shadow flex gap-4 shadow-zinc-400"
         >
           {order.icon}
           {order.title}
@@ -38,7 +38,7 @@ export default async function OrderSelectionPage ({ params }: { params: Promise<
 
       <div className="mt-10">
         <Link
-          className="py-4 bg-black text-white rounded-xl flex justify-center shadow"
+          className="py-4 bg-black text-white rounded-xl flex justify-center"
           href={`/stores/${storeId}/orders/expired`}
         >
           Забрать возврат

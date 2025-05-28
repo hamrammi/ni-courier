@@ -28,7 +28,7 @@ export default function DeliveryPoint ({ deliveryPoint, storeId }: { deliveryPoi
         </div>
       )}
       <button
-        className="p-4 border border-black bg-white rounded-xl shadow-lg w-full font-semibold"
+        className="p-4 bg-white rounded-xl shadow w-full font-semibold shadow-zinc-400"
         type="submit"
         disabled={pending}
       >
