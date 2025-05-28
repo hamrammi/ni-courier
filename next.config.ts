@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("http://127.0.0.1:3003/public/**"),
       new URL("http://localhost:8080/assets/**"),
-      new URL("http://192.168.11.225:4443/assets/**"),
+      new URL("http://localhost:4443/assets/**"),
     ]
   }
 }
