@@ -32,6 +32,8 @@ export interface OrderItem {
   id: number
   number: string
   date: number
+  deliveryPeriod: [string, string]
+  processable: boolean
   pickUpTime: string
   storeId: number
   status: string

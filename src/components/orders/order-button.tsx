@@ -18,13 +18,15 @@ export default function OrderButton (props: Props) {
         {getOrderIntoDeliveryState?.error && (
           <div className="text-sm bg-pink-100 text-pink-700 rounded-xl py-2 px-4 border border-pink-500 mb-4">{getOrderIntoDeliveryState.error}</div>
         )}
-        <button
-          className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
-          onClick={() => { startTransition(getOrderIntoDeliveryAction) }}
-          disabled={getOrderIntoDeliveryPending}
-        >
-          Забрал в доставку
-        </button>
+        {props.order.processable && (
+          <button
+            className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
+            onClick={() => { startTransition(getOrderIntoDeliveryAction) }}
+            disabled={getOrderIntoDeliveryPending}
+          >
+            Забрал в доставку
+          </button>
+        )}
       </>
     )
   }
@@ -35,13 +37,15 @@ export default function OrderButton (props: Props) {
         {putOrderIntoCellState?.error && (
           <div className="text-sm bg-pink-100 text-pink-700 rounded-xl py-2 px-4 border border-pink-500 mb-4">{putOrderIntoCellState.error}</div>
         )}
-        <button
-          className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
-          onClick={() => { startTransition(putOrderIntoCellAction) }}
-          disabled={putOrderIntoCellPending}
-        >
-          Положить в ячейку
-        </button>
+        {props.order.processable && (
+          <button
+            className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
+            onClick={() => { startTransition(putOrderIntoCellAction) }}
+            disabled={putOrderIntoCellPending}
+          >
+            Положить в ячейку
+          </button>
+        )}
       </>
     )
   }
@@ -52,13 +56,15 @@ export default function OrderButton (props: Props) {
         {putOrderIntoStoreState?.error && (
           <div className="text-sm bg-pink-100 text-pink-700 rounded-xl py-2 px-4 border border-pink-500 mb-4">{putOrderIntoStoreState.error}</div>
         )}
-        <button
-          className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
-          onClick={() => { startTransition(putOrderIntoStoreAction) }}
-          disabled={putOrderIntoStorePending}
-        >
-          Вернул в магазин
-        </button>
+        {props.order.processable && (
+          <button
+            className="border-1 border-violet-500 hover:bg-violet-500 hover:text-white text-violet-500 py-2 font-semibold rounded-lg w-full"
+            onClick={() => { startTransition(putOrderIntoStoreAction) }}
+            disabled={putOrderIntoStorePending}
+          >
+            Вернул в магазин
+          </button>
+        )}
       </>
     )
   }
