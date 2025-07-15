@@ -3,6 +3,7 @@ import httpApi from '@/lib/http'
 import { deleteSession } from '@/lib/session'
 import { Mail, Smartphone } from 'lucide-react'
 import { redirect } from 'next/navigation'
+import WebPushSection from './webpush'
 
 export default async function ProfilePage () {
   async function logout () {
@@ -28,6 +29,10 @@ export default async function ProfilePage () {
           >Выйти</button>
         </div>
       </div>
+
+      <div className="p-4">
+        <WebPushSection />
+      </div >
     </>
   )
 }

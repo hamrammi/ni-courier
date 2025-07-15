@@ -7,6 +7,14 @@ export interface SessionPayload extends JWTPayload {
   courier_id: string
 }
 
+export const cookieOpts = {
+  httpOnly: true,
+  sameSite: 'none' as const,
+  secure: true,
+  path: '/',
+  maxAge: 60 * 60 * 24 * 30,
+}
+
 export const accessTokenName = 'newit.delivery-courier.access_token'
 export const refreshTokenName = 'newit.delivery-courier.refresh_token'
 
@@ -20,14 +28,8 @@ export async function getSession () {
 
 export async function createSession (accessToken: string, refreshToken: string) {
   const cookieStore = await cookies()
-  const opts = {
-    httpOnly: true,
-    // secure: true, // doesn't work on production 192.168.11.225
-    sameSite: 'lax' as const,
-    path: '/',
-  }
-  cookieStore.set(accessTokenName, accessToken, opts)
-  cookieStore.set(refreshTokenName, refreshToken, opts)
+  cookieStore.set(accessTokenName, accessToken, cookieOpts)
+  cookieStore.set(refreshTokenName, refreshToken, cookieOpts)
 }
 
 export async function deleteSession () {

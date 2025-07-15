@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import httpApi from './lib/http'
-import { accessTokenName, refreshTokenName, verifyToken } from './lib/session'
+import { accessTokenName, cookieOpts, refreshTokenName, verifyToken } from './lib/session'
 
 export async function middleware (request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
@@ -39,8 +39,8 @@ export async function middleware (request: NextRequest) {
           headers: requestHeaders
         }
       })
-      response.cookies.set(accessTokenName, tokens.accessToken)
-      response.cookies.set(refreshTokenName, tokens.refreshToken)
+      response.cookies.set(accessTokenName, tokens.accessToken, cookieOpts)
+      response.cookies.set(refreshTokenName, tokens.refreshToken, cookieOpts)
       console.log('[middleware] Tokens were successfully refreshed')
       return response
     } catch (e) {

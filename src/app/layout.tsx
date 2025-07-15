@@ -10,6 +10,20 @@ const geistSans = Nunito({
 export const metadata: Metadata = {
   title: 'Курьер',
   description: 'Интерфейс для курьера доставки еды',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'icon',
+      url: '/favicon.ico',
+    },
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'Заберусам',
+    statusBarStyle: 'default',
+  },
 }
 
 export default function RootLayout ({

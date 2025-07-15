@@ -60,6 +60,22 @@ export default class Api {
     return this.fetchGet<ProfileResponse>('/profile')
   }
 
+  subscribeWebPush (endpoint: string, auth: string, p256dh: string) {
+    return this.fetchPost<null>(`/profile/subscriptions`, {
+      endpoint,
+      auth,
+      p256dh
+    })
+  }
+
+  unsubscribeWebPush (endpoint: string, auth: string, p256dh: string) {
+    return this.fetchDelete<null>(`/profile/subscriptions`, {
+      endpoint,
+      auth,
+      p256dh
+    })
+  }
+
   private async fetchGet<RT> (url: string) {
     const { accessToken } = await getSession()
     const res = await fetch(process.env.API_URL + url, {
@@ -76,6 +92,19 @@ export default class Api {
     const { accessToken } = await getSession()
     const res = await fetch(process.env.API_URL + url, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken
+      },
+      body: JSON.stringify(body)
+    })
+    return this.getDataOrThrow<RT>(res)
+  }
+
+  private async fetchDelete<RT> (url: string, body: Record<string, unknown>) {
+    const { accessToken } = await getSession()
+    const res = await fetch(process.env.API_URL + url, {
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + accessToken

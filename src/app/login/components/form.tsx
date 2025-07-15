@@ -17,6 +17,7 @@ const initialState: InitialState = {
 export default function LoginForm () {
   const [state, formAction, isPending] = useActionState(loginAction, initialState)
   const [showPassword, setShowPassword] = useState(false)
+  const [login, setLogin] = useState('')
   return (
     <form
       className="space-y-4 p-4 w-full max-w-sm"
@@ -31,11 +32,13 @@ export default function LoginForm () {
           Телефон
         </label>
         <input
-          className="block w-full px-4 py-2 border rounded-md bg-white"
+          className="block w-full px-4 py-2 border rounded-md bg-white text-base"
           type="text"
           id="login"
           name="login"
           required={true}
+          value={login}
+          onChange={(e) => setLogin(e.target.value)}
         />
       </div>
       <div className="space-y-2 relative">
@@ -43,7 +46,7 @@ export default function LoginForm () {
           Пароль
         </label>
         <input
-          className="block w-full px-4 py-2 border rounded-md bg-white"
+          className="block w-full px-4 py-2 border rounded-md bg-white text-base"
           type={showPassword ? "text" : "password"}
           id="password"
           name="password"
