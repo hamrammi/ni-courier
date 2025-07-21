@@ -83,7 +83,8 @@ export default class Api {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + accessToken
-      }
+      },
+      signal: AbortSignal.timeout(5000)
     })
     return this.getDataOrThrow<RT>(res)
   }
@@ -96,7 +97,8 @@ export default class Api {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(5000)
     })
     return this.getDataOrThrow<RT>(res)
   }
@@ -109,7 +111,8 @@ export default class Api {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + accessToken
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(5000)
     })
     return this.getDataOrThrow<RT>(res)
   }
